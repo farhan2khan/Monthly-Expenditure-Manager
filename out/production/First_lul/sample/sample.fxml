@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.Controller">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="_File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP"
+                                                    shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="mnuOpen" mnemonicParsing="false" onAction="#onOpenMenuItemClicked" text="Open">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP"
+                                                    shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="mnuSave" mnemonicParsing="false" onAction="#onSaveMenuItemClicked" text="Save">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP"
+                                                    shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Exit">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP"
+                                                    shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="_View">
+                    <items>
+                        <RadioMenuItem mnemonicParsing="false" text="Grouped Transactions">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="tglGroupTransactions"/>
+                            </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem mnemonicParsing="false" selected="true" text="Ungrouped Transactions"
+                                       toggleGroup="$tglGroupTransactions"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="_Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="300.0"
+                  BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="163.0" minWidth="10.0" prefWidth="74.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="233.0" minWidth="10.0" prefWidth="226.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Type" GridPane.halignment="RIGHT"
+                       GridPane.valignment="CENTER"/>
+                <ChoiceBox fx:id="cmbType" maxHeight="-Infinity" prefWidth="200.0" GridPane.columnIndex="1"
+                           GridPane.halignment="CENTER"/>
+                <Label text="Category" GridPane.halignment="RIGHT" GridPane.rowIndex="1"/>
+                <Label text="Amount" GridPane.halignment="RIGHT" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtAmount" maxWidth="-Infinity" prefHeight="26.0" prefWidth="200.0"
+                           promptText="Amount in local currency" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                           GridPane.rowIndex="2"/>
+                <Button fx:id="btnAddEntry" mnemonicParsing="false" onAction="#onAddEntryClicked" text="Add Entry"
+                        GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5"/>
+                <Label text="Add to" GridPane.halignment="RIGHT" GridPane.rowIndex="4"/>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1"
+                      GridPane.rowIndex="4">
+                    <children>
+                        <RadioButton fx:id="rdbTransactions" mnemonicParsing="false"
+                                     onAction="#onTransactionsButtonSelected" selected="true" text="Transactions">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="tglAddTo"/>
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rdbBudget" mnemonicParsing="false" onAction="#onBudgetButtonSelected"
+                                     text="Budget" toggleGroup="$tglAddTo"/>
+                    </children>
+                </HBox>
+                <ComboBox fx:id="cmbCategory" editable="true" prefWidth="200.0" GridPane.columnIndex="1"
+                          GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                <Label text="Notes" GridPane.halignment="RIGHT" GridPane.rowIndex="3"/>
+                <TextArea fx:id="txtNotes" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0"
+                          promptText="Add your notes" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                          GridPane.rowIndex="3"/>
+            </children>
+        </GridPane>
+    </center>
+    <left>
+        <TitledPane animated="false" maxHeight="1.7976931348623157E308" text="Transactions">
+            <content>
+                <AnchorPane maxHeight="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                            prefWidth="200.0">
+                    <children>
+                        <TableView fx:id="transactionsView" maxHeight="-Infinity" minHeight="-Infinity"
+                                   prefHeight="323.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="transactionsCategoryColumn" prefWidth="114.0" text="Category"/>
+                                <TableColumn fx:id="transactionsAmountColumn" prefWidth="83.0" text="Amount"/>
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+    </left>
+    <right>
+        <TitledPane animated="false" maxHeight="1.7976931348623157E308" text="Budget" BorderPane.alignment="CENTER">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <TableView fx:id="budgetView" prefHeight="323.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="budgetCategoryColumn" editable="false" prefWidth="103.0"
+                                             text="Category"/>
+                                <TableColumn fx:id="budgetAmountColumn" editable="false" prefWidth="96.0"
+                                             text="Budget"/>
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+    </right>
+</BorderPane>
